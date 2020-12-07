@@ -1,20 +1,40 @@
-# 1. написать функцию, которая принимает N целых чисел и возвращает список квадратов этих чисел.
-#    Бонусом будет сделать keyword аргумент для выбора степени, в которую будут возводиться числа
-#
-# 2. написать функцию, которая на вход принимает список из целых чисел, и возвращает только чётные/нечётные/простые числа
-#    (выбор производится передачей дополнительного аргумента)
-#
-# 3. создать декоратор для замера времени выполнения функции
+# 1.
+    # 1. написать функцию, которая принимает N целых чисел и возвращает список квадратов этих чисел.
+    #    Бонусом будет сделать keyword аргумент для выбора степени, в которую будут возводиться числа
+    #
+    # 2. написать функцию, которая на вход принимает список из целых чисел, и возвращает только чётные/нечётные/простые числа
+    #    (выбор производится передачей дополнительного аргумента)
+    #
+    # 3. создать декоратор для замера времени выполнения функции
 
+# 2.
+    # 1. создать декоратор, который показывает вложенные входы в функцию. Применить на примере вычисления чисел Фибоначчи
 
-#1
-def power_list(init_list, N):
+from datetime import datetime
+from functools import wraps
+
+DEPTH = 0
+
+#1.3
+def time_interval(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        t1 = datetime.now()
+        result = fn(*args, **kwargs)
+        t2 = datetime.now()
+        print('Время выполнения функции {} = {}'.format(fn.__name__, t2-t1))
+        return result
+    return wrapper
+
+#1.1
+@time_interval
+def power_list(init_list, n):
     res = []
     for item in init_list:
-        res.append(item ** N)
+        res.append(item ** n)
     return res
 
-#2
+#1.2
 def get_part_list(init_list, A):
     res = []
     for item in init_list:
@@ -35,10 +55,41 @@ def get_part_list(init_list, A):
                     res.append(item)
     return res
 
-N = 2
-my_list = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-print('init list: {}\n'. format(my_list))
+
+
+N = int(input('Введите степень числа: '))
+my_list = [int(x) for x in input('Введите массив чисел(через запятую или пробел): ').split()]
+print(my_list)
+#exit(13)
 print('возведение в степень {}: {}'.format(N, power_list(my_list, N)))
 print('чётные числа: {}'.format(get_part_list(my_list, 0)))
 print('НЕчётные числа: {}'.format(get_part_list(my_list, 1)))
 print('простые числа: {}'.format(get_part_list(my_list, 2)))
+
+#2.1
+
+def trace(fn):
+    @wraps(fn)
+    def wrapper(*args):
+        #print('-> {}({})'.format(fib.__name__, *args))
+        x, depth = args[0], args[1]
+
+        print('{} {}({}) ->'.format('.' * 4* depth, fib.__name__, x).strip())
+        result = fn(*args)
+        #if depth==0: depth=1
+        print('{} {}({}) <- {}'.format('_' * 4*depth, fib.__name__, x, result).strip())
+        return result
+    return wrapper
+
+
+@trace
+def fib(x, depth):
+    depth+=1
+    if x>=0 and x<=1: return x
+    return fib(x-1, depth) + fib(x-2, depth)
+
+
+# main
+
+X = int(input('Введите индекс ряда Фибоначчи: '))
+print('\nЧисло Фибоначчи для индекса "{}" = {}'.format(X, fib(X, 0)))
