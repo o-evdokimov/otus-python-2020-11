@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # my
-lesson-3_git-shell/.idea/
+*idea*
