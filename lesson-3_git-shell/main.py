@@ -28,11 +28,17 @@ def time_interval(fn):
 
 #1.1
 @time_interval
-def power_list(init_list, n):
+def power_list(init_list, n = 2):
     res = []
     for item in init_list:
         res.append(item ** n)
     return res
+
+@time_interval
+def power_number(init_number, n = 2):
+    def apply(number):
+        return number**n
+    return list(map(apply, init_number))
 
 #1.2
 def get_part_list(init_list, A):
@@ -56,12 +62,12 @@ def get_part_list(init_list, A):
     return res
 
 
-
+import re
 N = int(input('Введите степень числа: '))
-my_list = [int(x) for x in input('Введите массив чисел(через запятую или пробел): ').split()]
-print(my_list)
-#exit(13)
+my_list = list(map(int, re.split(',| ', input('Введите массив чисел(через запятую или пробел): '))))
+
 print('возведение в степень {}: {}'.format(N, power_list(my_list, N)))
+print('возведение в степень {}: {}, функция {} с map: '.format(N, power_number(my_list, N), power_number.__name__))
 print('чётные числа: {}'.format(get_part_list(my_list, 0)))
 print('НЕчётные числа: {}'.format(get_part_list(my_list, 1)))
 print('простые числа: {}'.format(get_part_list(my_list, 2)))
