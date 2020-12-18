@@ -10,6 +10,11 @@
 # 2.
     # 1. создать декоратор, который показывает вложенные входы в функцию. Применить на примере вычисления чисел Фибоначчи
 
+# Constants
+FILTER_EVEN = 'even'
+FILTER_ODD = 'odd'
+FILTER_SIMPLE = 'simple'
+
 import re
 from datetime import datetime
 from functools import wraps
@@ -41,26 +46,6 @@ def power_list_map(init_number, n = 2):
     return list(map(apply, init_number))
 
 #1.2
-def get_part_list(init_list, filter_type):
-    res = []
-    for item in init_list:
-        if filter_type=='even':
-            if item % 2 == 0:
-                res.append(item)
-        elif filter_type == 'odd':
-            if item % 2 != 0:
-                res.append(item)
-        elif filter_type=='simple':
-            simple = True
-            if item > 0:
-                for i in range(2, item):
-                    if item % i == 0:
-                        simple = False
-                        break
-                if simple:
-                    res.append(item)
-    return res
-
 def get_filter_list(filter_type, item):
     if filter_type=='even':
         if item % 2 == 0:
@@ -93,29 +78,27 @@ def trace(fn):
 @trace
 def fib(x, depth):
     depth+=1
-    if x>=0 and x<=1: return x
+    if x in (0,1):
+        return x
     return fib(x-1, depth) + fib(x-2, depth)
 
 
 # MAIN
+if __name__ == "__main__":
+    N = int(input('Введите степень числа: '))
+    my_list = list(map(int, re.split(',| ', input('Введите массив чисел(через запятую или пробел): ').strip())))
 
-N = int(input('Введите степень числа: '))
-my_list = list(map(int, re.split(',| ', input('Введите массив чисел(через запятую или пробел): ').strip())))
+    print('возведение в степень {}: {}'.format(N, power_list(my_list, N)))
+    print('возведение в степень {}: {}  <- функция {} с map: '.format(N, power_list_map(my_list, N), power_list_map.__name__))
 
-print('возведение в степень {}: {}'.format(N, power_list(my_list, N)))
-print('возведение в степень {}: {}  <- функция {} с map: '.format(N, power_list_map(my_list, N), power_list_map.__name__))
+    FILTER_TYPE=FILTER_EVEN
+    print('чётные числа (via filter): {}'.format(list(filter(partial(get_filter_list, FILTER_TYPE), my_list))))
 
-FILTER_TYPE='even'
-print('чётные числа: {}'.format(get_part_list(my_list, FILTER_TYPE)))
-print('чётные числа (via filter): {}'.format(list(filter(partial(get_filter_list, FILTER_TYPE), my_list))))
+    FILTER_TYPE=FILTER_ODD
+    print('НЕчётные числа (via filter): {}'.format(list(filter(partial(get_filter_list, FILTER_TYPE), my_list))))
 
-FILTER_TYPE='odd'
-print('НЕчётные числа: {}'.format(get_part_list(my_list, FILTER_TYPE)))
-print('НЕчётные числа (via filter): {}'.format(list(filter(partial(get_filter_list, FILTER_TYPE), my_list))))
+    FILTER_TYPE=FILTER_SIMPLE
+    print('простые числа (via filter): {}'.format(list(filter(partial(get_filter_list, FILTER_TYPE), my_list))))
 
-FILTER_TYPE='simple'
-print('простые числа: {}'.format(get_part_list(my_list, FILTER_TYPE)))
-print('простые числа (via filter): {}'.format(list(filter(partial(get_filter_list, FILTER_TYPE), my_list))))
-
-X = int(input('Введите индекс для ряда Фибоначчи: '))
-print('\nЧисло Фибоначчи для индекса "{}" = {}'.format(X, fib(X, 0)))
+    X = int(input('Введите индекс для ряда Фибоначчи: '))
+    print('\nЧисло Фибоначчи для индекса "{}" = {}'.format(X, fib(X, 0)))
