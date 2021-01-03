@@ -26,8 +26,13 @@
 
 # Imports
 
-#1.1
+#1
+class Transport:
+    weight = 0
+    carrying = 0
 
+    def beep(self):
+        pass
 
 
 # MAIN
