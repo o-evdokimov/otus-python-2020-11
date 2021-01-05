@@ -92,8 +92,10 @@ class Truck(Transport):
         print('### run truck __init__')
         self.weight = weight
         self.carrying = carrying
+        # new attr for class
         self.passengers = passengers
 
+    # reloaded method
     def __repr__(self):
         print('### run truck __repr__')
         return (f'{self.name} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
