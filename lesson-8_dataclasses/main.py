@@ -41,33 +41,33 @@ os.chdir(LIB_DIR)
 
 # MAIN
 if __name__ == "__main__":
-#     print('\n>> Create @classmethod classes:\n')
-#     transport_list = [k for k in Beeps.keys() if k is not UNKNOWN_TRANSPORT]
-#     print('You may select transport: ', transport_list)
-#     cls_name = input('Input your transport: ')
-#     if cls_name not in transport_list: cls_name = UNKNOWN_TRANSPORT
-#
-#     ## use @classmethod decorator
-#     cls_params = {
-#         'name': cls_name,
-#         'beep': Beeps.get(cls_name),
-#         'weight': Weight.get(cls_name),
-#         'carrying': Carrying.get(cls_name),
-#         'passengers': Passengers.get(cls_name)}
-#     cls = BaseType(cls_name, (Transport,), cls_params)
-#     print(cls)
-#     cls.do_beep()
-#     ###
-#
-# ### use vanille classes
-#     print('\n\n>> Now create vanille class:\n')
-#     ###
-#     t = Truck(Passengers.get('Truck'), 6)
-#     print(t)
-#     t.do_beep()
-#     ###
-#     input('Press ENTER to continue...')
-#     ###
+    print('\n>> Create @classmethod classes:\n')
+    transport_list = [k for k in Beeps.keys() if k is not UNKNOWN_TRANSPORT]
+    print('You may select transport: ', transport_list)
+    cls_name = input('Input your transport: ')
+    if cls_name not in transport_list: cls_name = UNKNOWN_TRANSPORT
+
+    ## use @classmethod decorator
+    cls_params = {
+        'name': cls_name,
+        'beep': Beeps.get(cls_name),
+        'weight': Weight.get(cls_name),
+        'carrying': Carrying.get(cls_name),
+        'passengers': Passengers.get(cls_name)}
+    cls = BaseType(cls_name, (Transport,), cls_params)
+    print(cls)
+    cls.do_beep()
+    ###
+
+### use vanille classes
+    print('\n\n>> Now create vanille class:\n')
+    ###
+    t = Truck(Passengers.get('Truck'), 6)
+    print(t)
+    t.do_beep()
+    ###
+    input('Press ENTER to continue...')
+    ###
     flight_number = 'UK9212'
     b = Board('S7', flight_number)
     print(b)
