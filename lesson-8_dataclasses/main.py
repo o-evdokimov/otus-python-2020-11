@@ -69,7 +69,12 @@ if __name__ == "__main__":
     input('Press ENTER to continue...')
     ###
     flight_number = 'UK9212'
-    b = Board('S7', flight_number)
+    b = Board('S7', flight_number, 'DOMODEDOVO')
+    print(b)
+    print('\n>> Change plane binding:\n')
+    new_flight_number = 'KS5521'
+    airport = 'VNUKOVO'
+    b.change_binding((new_flight_number, airport))
     print(b)
     b.do_beep()
 

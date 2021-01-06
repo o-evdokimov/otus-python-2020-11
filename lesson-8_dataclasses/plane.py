@@ -39,12 +39,16 @@ class Boeing737(Plane):
 
 class Board(Boeing737):
     name = 'Board'
-    def __init__(self, aviacompany, flight_number):
+    def __init__(self, aviacompany, flight_number, airport):
         print('### run Board __init__')
         self.aviacompany = aviacompany
         self.flight_number = flight_number
+        self.airport = airport
         # new attr for class
         super().__init__()
+
+    def change_binding(self, new_binding):
+        self.flight_number, self.airport = new_binding
 
     def show_aviacompany(self):
         return self.aviacompany
@@ -52,4 +56,4 @@ class Board(Boeing737):
     # reloaded method
     def __repr__(self):
         print('### run Board __repr__')
-        return (f'{self.name} : aviacompany = {self.show_aviacompany()} : flight_number = {self.flight_number}')
+        return (f'{self.name} : aviacompany = {self.show_aviacompany()} : flight_number = {self.flight_number} : airport = {self.airport}')
