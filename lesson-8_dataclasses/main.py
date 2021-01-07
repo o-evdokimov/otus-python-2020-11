@@ -41,6 +41,7 @@ os.chdir(LIB_DIR)
 
 # MAIN
 if __name__ == "__main__":
+    print('################################')
     print('\n>> Create @classmethod classes:\n')
     transport_list = [k for k in Beeps.keys() if k is not UNKNOWN_TRANSPORT]
     print('You may select transport: ', transport_list)
@@ -56,26 +57,33 @@ if __name__ == "__main__":
         'passengers': Passengers.get(cls_name)}
     cls = BaseType(cls_name, (Transport,), cls_params)
     print(cls)
+    print('################################')
     cls.do_beep()
     ###
 
 ### use vanille classes
     print('\n\n>> Now create vanille class:\n')
     ###
-    t = Truck(Passengers.get('Truck'), 6)
+    print('################################')
+    truck_number = 'K2804UZ'
+    t = Truck(truck_number, Passengers.get('Trucks'), 6)
+    t.check_status()
     print(t)
+    print('################################')
     t.do_beep()
     ###
     input('Press ENTER to continue...')
-    ###
+    ##
+    print('################################')
     flight_number = 'UK9212'
     b = Board('S7', flight_number, 'DOMODEDOVO')
     print(b)
-    print('\n>> Change plane binding:\n')
+    print("\n>> Change Board's binding:\n")
     new_flight_number = 'KS5521'
     airport = 'VNUKOVO'
     b.change_binding((new_flight_number, airport))
     print(b)
+    print('################################')
     b.do_beep()
 
 ###

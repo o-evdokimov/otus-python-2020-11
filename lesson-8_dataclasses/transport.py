@@ -1,20 +1,19 @@
 import os
+from constants import Beeps, Passengers, Weight, Carrying, UNKNOWN_TRANSPORT
 
 class BaseType(type):
     def __repr__(cls):
         print('### run basetype __repr__')
-        return(f'{cls.name} : weight = {cls.weight} : carrying = {cls.carrying} : passengers = {cls.passengers}')
+        return(f'{cls.type} : weight = {cls.weight} : carrying = {cls.carrying} : passengers = {cls.passengers}')
 
 class Transport():
-    name = 'transport'
+    type = 'transport'
     weight = 0
     carrying = 0
     beep = None
 
-    def __init__(self, weight, carrying):
+    def __init__(self):
         print('### run base __init__')
-        self.weight = weight
-        self.carrying = carrying
 
     @classmethod
     def do_beep(cls):

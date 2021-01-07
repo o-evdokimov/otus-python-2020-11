@@ -2,20 +2,37 @@ from transport import Transport
 from constants import Beeps, Passengers, Weight, Carrying, UNKNOWN_TRANSPORT
 
 class Plane(Transport):
-    name = 'Plane'
-    beep = Beeps[name]
-    weight = Weight.get('Plane')
-    carrying = Carrying.get('Plane')
+    type = 'Plane'
+    beep = Beeps[type]
+    # weight = Weight.get('Plane')
+    # carrying = Carrying.get('Plane')
     aviacompany = None
 
-    def __init__(self, weight, carrying):
+    def __init__(self):
         print('### run plane __init__')
-        super().__init__(self.weight, self.carrying)
+        weight = self.get_data().get('weight')
+        carrying = self.get_data().get('carrying')
+        #print(f'KKK {weight} {carrying}')
+        if isinstance(self.weight, int) and isinstance(self.carrying, int):
+            if not self.weight and not self.carrying:
+                self.weight = weight
+                self.carrying = carrying
+        else:
+            raise ValueError(f"Invalid parameters for {self.__class__}")
+        # print(f'{self.weight} {self.carrying}')
+        super().__init__()
+
+    def get_data(self):
+        print(f'Class Type: {self.type}')
+        weight = Weight.get(self.type)
+        carrying = Carrying.get(self.type)
+        return {'weight': weight, 'carrying': carrying}
+
 
     # reloaded method
     def __repr__(self):
         print('### run truck __repr__')
-        return (f'{self.name} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
+        return (f'{self.type} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
 
 
 class Boeing737(Plane):
@@ -24,13 +41,13 @@ class Boeing737(Plane):
     fuel = 20
     max_passengers = 120
     max_speed = 900
-    weight = 27700
-    carrying = 49400
+    weight = 0
+    carrying = 0
 
     def __init__(self):
         print('### run Boeing737 __init__')
         # new attr for class
-        super().__init__(self.weight, self.carrying)
+        super().__init__()
 
     # reloaded method
     def __repr__(self):
@@ -56,4 +73,5 @@ class Board(Boeing737):
     # reloaded method
     def __repr__(self):
         print('### run Board __repr__')
+        print(f'{self.weight} {self.carrying}')
         return (f'{self.name} : aviacompany = {self.show_aviacompany()} : flight_number = {self.flight_number} : airport = {self.airport}')
