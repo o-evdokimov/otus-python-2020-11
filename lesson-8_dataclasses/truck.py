@@ -4,11 +4,11 @@ from dataclasses import dataclass
 
 
 class Trucks(Transport):
-    type = 'Trucks'
+    type = 'Truck'
     beep = Beeps[type]
 
     def __init__(self, passengers):
-        print('### run trucks __init__')
+        print(f'### run {self.__class__} __init__')
         # new attr for class
         self.passengers = passengers
         super().__init__()
@@ -19,7 +19,7 @@ class Trucks(Transport):
 
     # reloaded method
     def __repr__(self):
-        print('### run truck __repr__')
+        print(f'### run {self.__class__} __repr__')
         return (f'{self.type} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
 
 
@@ -27,7 +27,7 @@ class Truck(Trucks):
     type = 'Truck'
     name = 'Truck'
     def __init__(self, number, passengers, route):
-        print('### run truck __init__')
+        print(f'### run {self.__class__} __init__')
         self.number = number
         self.route = route
         self.status = None
@@ -46,7 +46,7 @@ class Truck(Trucks):
 
     # reloaded method
     def __repr__(self):
-        print('### run truck __repr__')
+        print(f'### run {self.__class__} __repr__')
         return (f'{self.type} : number = {self.number} : status = {self.status} ')
 
 

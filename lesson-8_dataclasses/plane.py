@@ -7,7 +7,7 @@ class Plane(Transport):
     aviacompany = None
 
     def __init__(self):
-        print('### run plane __init__')
+        print(f'### run {self.__class__} __init__')
         weight = self.get_data().get('weight')
         carrying = self.get_data().get('carrying')
         if isinstance(self.weight, int) and isinstance(self.carrying, int):
@@ -26,13 +26,14 @@ class Plane(Transport):
 
     # reloaded method
     def __repr__(self):
-        print('### run truck __repr__')
+        print(f'### run {self.__class__} __repr__')
         return (f'{self.type} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
 
 
 class Boeing737(Plane):
     name = 'Boeing737'
-    beep = Beeps[name]
+    type = 'Plane'
+    beep = Beeps[type]
     fuel = 20
     max_passengers = 120
     max_speed = 900
@@ -45,7 +46,7 @@ class Boeing737(Plane):
 
     # reloaded method
     def __repr__(self):
-        print('### run Boeing737 __repr__')
+        print(f'### run {self.__class__} __repr__')
         return (f'{self.name} : passengers = {self.max_passengers} : max_speed = {self.max_speed}')
 
 class Board(Boeing737):
@@ -68,6 +69,6 @@ class Board(Boeing737):
 
     # reloaded method
     def __repr__(self):
-        print('### run Board __repr__')
+        print(f'### run {self.__class__} __repr__')
         print(f'{self.weight} {self.carrying}')
         return (f'{self.name} : aviacompany = {self.show_aviacompany()} : flight_number = {self.flight_number} : airport = {self.airport}')

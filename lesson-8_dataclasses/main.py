@@ -24,21 +24,15 @@
 
 # Imports
 import os
-from pathlib import Path
 #from abc import ABC, abstractmethod
 
 # my modules
 from transport import BaseType, Transport
 from plane import Board
-from time import sleep
 from truck import Truck, Route
-from constants import Beeps, Passengers, Weight, Carrying, UNKNOWN_TRANSPORT
+from constants import Beeps, Passengers, Weight, Carrying, UNKNOWN_TRANSPORT, FuelError, LIB_DIR
 
-# Constants
-
-LIB_DIR = Path(__file__).resolve().parent.joinpath('audio')
 os.chdir(LIB_DIR)
-
 
 # MAIN
 if __name__ == "__main__":
@@ -58,35 +52,36 @@ if __name__ == "__main__":
         'passengers': Passengers.get(cls_name)}
     cls = BaseType(cls_name, (Transport,), cls_params)
     print(cls)
-    print('################################')
-    cls.start(cls)
-    fueling = input(f'Do you want to fuel {cls.name}? y/n: ')
-    if fueling == 'y':
-        cls.fuel_fill()
+    try:
         cls.start(cls)
-    ###
-    input('Press ENTER to continue...')
-    ###
+    except FuelError:
+        fueling = input(f'No fuel. Do you want to refuel {cls.name}? y/n: ')
+        if fueling == 'y':
+            cls.fuel_fill()
+            cls.start(cls)
+    input('Press ENTER to continue...\n\n')
 
 ### use vanille classes
-    print('\n\n>> Now create vanille class:\n')
+    print('\n\n>> Now create vanille classes:\n')
     ###
-    print('################################')
+    print('Create Truck object')
     truck_number = 'K2804UZ'
     truck_route = Route('[Oregon, Terminal-6]', '[Texas, Terminal-4]')
     t = Truck(truck_number, Passengers.get('Trucks'), truck_route)
     print(t)
-    print('################################')
-    t.start(t)
-    fueling = input(f'Do you want to fuel {t.name}? y/n: ')
-    if fueling == 'y':
-        t.fuel_fill()
+    try:
         t.start(t)
+    except FuelError:
+        fueling = input(f'No fuel. Do you want to refuel {t.name}? y/n: ')
+        if fueling == 'y':
+            t.fuel_fill()
+            t.start(t)
+    print('Check status...')
     t.check_status()
+    print(t)
+    input('Press ENTER to continue...\n\n')
     ###
-    input('Press ENTER to continue...')
-    ###
-    print('################################')
+    print('Create Board object')
     flight_number = 'UK9212'
     b = Board('S7', flight_number, 'DOMODEDOVO')
     print(b)
@@ -95,12 +90,13 @@ if __name__ == "__main__":
     airport = 'VNUKOVO'
     b.change_binding((new_flight_number, airport))
     print(b)
-    print('################################')
-    b.start(b)
-    fueling = input(f'Do you want to fuel {b.name}? y/n: ')
-    if fueling == 'y':
-        b.fuel_fill()
+    try:
         b.start(b)
+    except FuelError:
+        fueling = input(f'No fuel. Do you want to refuel {b.name}? y/n: ')
+        if fueling == 'y':
+            b.fuel_fill()
+            b.start(b)
 
 ###
 

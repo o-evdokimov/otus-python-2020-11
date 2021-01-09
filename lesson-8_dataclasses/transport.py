@@ -1,4 +1,5 @@
 import os
+from constants import FuelError
 
 class BaseType(type):
 
@@ -6,7 +7,7 @@ class BaseType(type):
         print(f'{self.name} starts, passengers = {self.passengers} ...')
 
     def __repr__(cls):
-        print('### run basetype __repr__')
+        print(f'### run {cls.__class__} __repr__')
         return(f'{cls.type} : weight = {cls.weight} : carrying = {cls.carrying} : passengers = {cls.passengers}')
 
 class Transport():
@@ -22,7 +23,7 @@ class Transport():
     @classmethod
     def start(cls, cls_i):
         if cls.fuel_filling:
-            print(f'start {cls.name}...')
+            print(f'Start {cls.name}...')
             cls_i.send_start_msg()
             code = os.system("afplay {}".format(cls.beep))
             if code==0:
@@ -30,8 +31,7 @@ class Transport():
             else:
                 return False
         else:
-            print('Fuel is not filled. Start is not possible.')
-
+            raise FuelError('Fuel is not filled. Start is not possible.')
 
     @classmethod
     def fuel_fill(cls):
