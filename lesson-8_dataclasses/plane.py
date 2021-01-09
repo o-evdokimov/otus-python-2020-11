@@ -4,22 +4,18 @@ from constants import Beeps, Passengers, Weight, Carrying, UNKNOWN_TRANSPORT
 class Plane(Transport):
     type = 'Plane'
     beep = Beeps[type]
-    # weight = Weight.get('Plane')
-    # carrying = Carrying.get('Plane')
     aviacompany = None
 
     def __init__(self):
         print('### run plane __init__')
         weight = self.get_data().get('weight')
         carrying = self.get_data().get('carrying')
-        #print(f'KKK {weight} {carrying}')
         if isinstance(self.weight, int) and isinstance(self.carrying, int):
             if not self.weight and not self.carrying:
                 self.weight = weight
                 self.carrying = carrying
         else:
             raise ValueError(f"Invalid parameters for {self.__class__}")
-        # print(f'{self.weight} {self.carrying}')
         super().__init__()
 
     def get_data(self):
@@ -27,7 +23,6 @@ class Plane(Transport):
         weight = Weight.get(self.type)
         carrying = Carrying.get(self.type)
         return {'weight': weight, 'carrying': carrying}
-
 
     # reloaded method
     def __repr__(self):
@@ -46,7 +41,6 @@ class Boeing737(Plane):
 
     def __init__(self):
         print('### run Boeing737 __init__')
-        # new attr for class
         super().__init__()
 
     # reloaded method
@@ -61,7 +55,6 @@ class Board(Boeing737):
         self.aviacompany = aviacompany
         self.flight_number = flight_number
         self.airport = airport
-        # new attr for class
         super().__init__()
 
     def change_binding(self, new_binding):
@@ -69,6 +62,9 @@ class Board(Boeing737):
 
     def show_aviacompany(self):
         return self.aviacompany
+
+    def send_start_msg(self):
+        print(f'start {self.flight_number} from {self.airport} by {self.aviacompany}...')
 
     # reloaded method
     def __repr__(self):

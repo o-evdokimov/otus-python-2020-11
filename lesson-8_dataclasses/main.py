@@ -30,7 +30,8 @@ from pathlib import Path
 # my modules
 from transport import BaseType, Transport
 from plane import Board
-from truck import Truck
+from time import sleep
+from truck import Truck, Route
 from constants import Beeps, Passengers, Weight, Carrying, UNKNOWN_TRANSPORT
 
 # Constants
@@ -48,7 +49,7 @@ if __name__ == "__main__":
     cls_name = input('Input your transport: ')
     if cls_name not in transport_list: cls_name = UNKNOWN_TRANSPORT
 
-    ## use @classmethod decorator
+## use @classmethod decorator
     cls_params = {
         'name': cls_name,
         'beep': Beeps.get(cls_name),
@@ -58,7 +59,13 @@ if __name__ == "__main__":
     cls = BaseType(cls_name, (Transport,), cls_params)
     print(cls)
     print('################################')
-    cls.do_beep()
+    cls.start(cls)
+    fueling = input(f'Do you want to fuel {cls.name}? y/n: ')
+    if fueling == 'y':
+        cls.fuel_fill()
+        cls.start(cls)
+    ###
+    input('Press ENTER to continue...')
     ###
 
 ### use vanille classes
@@ -66,14 +73,19 @@ if __name__ == "__main__":
     ###
     print('################################')
     truck_number = 'K2804UZ'
-    t = Truck(truck_number, Passengers.get('Trucks'), 6)
-    t.check_status()
+    truck_route = Route('[Oregon, Terminal-6]', '[Texas, Terminal-4]')
+    t = Truck(truck_number, Passengers.get('Trucks'), truck_route)
     print(t)
     print('################################')
-    t.do_beep()
+    t.start(t)
+    fueling = input(f'Do you want to fuel {t.name}? y/n: ')
+    if fueling == 'y':
+        t.fuel_fill()
+        t.start(t)
+    t.check_status()
     ###
     input('Press ENTER to continue...')
-    ##
+    ###
     print('################################')
     flight_number = 'UK9212'
     b = Board('S7', flight_number, 'DOMODEDOVO')
@@ -84,7 +96,11 @@ if __name__ == "__main__":
     b.change_binding((new_flight_number, airport))
     print(b)
     print('################################')
-    b.do_beep()
+    b.start(b)
+    fueling = input(f'Do you want to fuel {b.name}? y/n: ')
+    if fueling == 'y':
+        b.fuel_fill()
+        b.start(b)
 
 ###
 
