@@ -26,7 +26,7 @@ class Plane(Transport):
     # reloaded method
     def __repr__(self):
         print(f'### run {self.__class__} __repr__')
-        return (f'{self.type} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
+        return (f'*** {self.type} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
 
 
 class Boeing737(Plane):
@@ -46,7 +46,7 @@ class Boeing737(Plane):
     # reloaded method
     def __repr__(self):
         print(f'### run {self.__class__} __repr__')
-        return (f'{self.name} : passengers = {self.max_passengers} : max_speed = {self.max_speed}')
+        return (f'*** {self.name} : passengers = {self.max_passengers} : max_speed = {self.max_speed}')
 
 class Board(Boeing737):
     name = 'Board'
@@ -58,7 +58,7 @@ class Board(Boeing737):
         super().__init__()
     def __repr__(self):
         print(f'### run {self.__class__} __repr__')
-        return (f'{self.name} : aviacompany = {self.show_aviacompany()} : flight_number = {self.flight_number} : airport = {self.airport}')
+        return (f'*** {self.name} : aviacompany = {self.show_aviacompany()} : flight_number = {self.flight_number} : airport = {self.airport}')
 
     def change_binding(self, new_binding):
         self.flight_number, self.airport = new_binding
@@ -67,7 +67,7 @@ class Board(Boeing737):
         return self.aviacompany
 
     def send_start_msg(self):
-        print(f'start {self.flight_number} from {self.airport} by {self.aviacompany}...')
+        print(f'Start {self.flight_number} from {self.airport} by {self.aviacompany}...')
 
     def check_ready(self, check_min_level = None):
         if self.fuel_filling:

@@ -14,7 +14,7 @@ class BaseType(type):
 
     def __repr__(cls):
         print(f'### run {cls.__class__} __repr__')
-        return(f'{cls.type} : weight = {cls.weight} : carrying = {cls.carrying} : passengers = {cls.passengers}')
+        return(f'*** {cls.type} : weight = {cls.weight} : carrying = {cls.carrying} : passengers = {cls.passengers}')
 
     @classmethod
     def start(cls, cls_instanse):
@@ -63,7 +63,6 @@ class Transport(ABC):
             else:
                 return False
         else:
-            #pass
             raise FuelError('Fuel is not filled. Start is not possible.')
 
     def refuel(self):

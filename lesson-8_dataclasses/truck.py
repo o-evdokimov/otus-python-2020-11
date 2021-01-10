@@ -2,6 +2,11 @@ from transport import Transport
 from constants import Beeps, InMove, Stopped, FuelError
 from dataclasses import dataclass
 
+@dataclass
+class Route:
+    source: str = None
+    destination: str = None
+
 
 class Trucks(Transport):
     type = 'Truck'
@@ -16,7 +21,7 @@ class Trucks(Transport):
     # reloaded method
     def __repr__(self):
         print(f'### run {self.__class__} __repr__')
-        return (f'{self.type} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
+        return (f'*** {self.type} : weight = {self.weight} : carrying = {self.carrying} : passengers = {self.passengers}')
 
     def check_ready(self):
         if self.fuel_filling:
@@ -47,10 +52,6 @@ class Truck(Trucks):
     # reloaded method
     def __repr__(self):
         print(f'### run {self.__class__} __repr__')
-        return (f'{self.type} : number = {self.number} : status = {self.status} ')
+        return (f'*** {self.type} : number = {self.number} : status = {self.status} ')
 
 
-@dataclass
-class Route:
-    source: str = None
-    destination: str = None
