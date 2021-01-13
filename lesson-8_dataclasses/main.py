@@ -52,13 +52,13 @@ if __name__ == "__main__":
     cls = BaseType(cls_name, (), cls_params)
     print(cls)
     try:
-        cls.start(cls)
+        cls.start()
     except FuelError:
         print('Transport is not ready!')
     fueling = input(f'No fuel. Do you want to refuel {cls.name}? y/n: ')
     if fueling == 'y':
         cls.refuel()
-        cls.start(cls)
+        cls.start()
     input('Press ENTER to continue...\n\n')
 
 ### use vanille classes
@@ -70,13 +70,13 @@ if __name__ == "__main__":
     t = SmallTruck(truck_number, Passengers.get('Trucks'), truck_route)
     print(t)
     try:
-        t.start(t)
+        t.start()
     except FuelError:
         print('Transport is not ready!')
     fueling = input(f'No fuel. Do you want to refuel {t.name}? y/n: ')
     if fueling == 'y':
         t.refuel()
-        t.start(t)
+        t.start()
     print('Check status...')
     t.check_status()
     print(t)
@@ -92,10 +92,10 @@ if __name__ == "__main__":
     b.change_binding((new_flight_number, airport))
     print(b)
     try:
-        b.start(b)
+        b.start()
     except FuelError:
         print('Transport is not ready!')
     fueling = input(f'No fuel. Do you want to refuel {b.name}? y/n: ')
     if fueling == 'y':
         b.refuel()
-        b.start(b)
+        b.start()

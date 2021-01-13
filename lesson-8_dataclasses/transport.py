@@ -16,12 +16,12 @@ class BaseType(type):
         print(f'### run {cls.__class__} __repr__')
         return(f'*** {cls.type} : weight = {cls.weight} : carrying = {cls.carrying} : passengers = {cls.passengers}')
 
-    @classmethod
-    def start(cls, cls_instanse):
-        if cls_instanse.check_ready():
-            print(f'Start {cls_instanse.name}...')
-            cls_instanse.send_start_msg()
-            code = os.system("afplay {}".format(cls_instanse.beep))
+    #@classmethod
+    def start(self):
+        if self.check_ready():
+            print(f'Start {self.name}...')
+            self.send_start_msg()
+            code = os.system("afplay {}".format(self.beep))
             if code==0:
                 return True
             else:
@@ -29,9 +29,9 @@ class BaseType(type):
         else:
             raise FuelError('Fuel is not filled. Start is not possible.')
 
-    @classmethod
-    def refuel(cls):
-        cls.fuel_filling = True
+    #@classmethod
+    def refuel(self):
+        self.fuel_filling = True
 
     def check_ready(self):
         if self.fuel_filling:
@@ -52,12 +52,12 @@ class Transport(ABC):
     def check_ready(self):
         pass
 
-    @classmethod
-    def start(cls, cls_instanse):
-        print(f'Start {cls_instanse.name}...')
-        if cls_instanse.check_ready():
-            cls_instanse.send_start_msg()
-            code = os.system("afplay {}".format(cls_instanse.beep))
+    #@classmethod
+    def start(self):
+        print(f'Start {self.name}...')
+        if self.check_ready():
+            self.send_start_msg()
+            code = os.system("afplay {}".format(self.beep))
             if code==0:
                 return True
             else:
