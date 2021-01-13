@@ -28,7 +28,7 @@ import os
 # My modules
 from transport import BaseType, Transport
 from plane import Board
-from truck import Truck, Route
+from truck import SmallTruck, Route
 from constants import Beeps, Passengers, Weight, Carrying, UNKNOWN_TRANSPORT, FuelError, LIB_DIR
 
 os.chdir(LIB_DIR)
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     print('Create Truck object\n')
     truck_number = 'K2804UZ'
     truck_route = Route('[Oregon, Terminal-6]', '[Texas, Terminal-4]')
-    t = Truck(truck_number, Passengers.get('Trucks'), truck_route)
+    t = SmallTruck(truck_number, Passengers.get('Trucks'), truck_route)
     print(t)
     try:
         t.start(t)

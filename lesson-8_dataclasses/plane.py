@@ -1,5 +1,5 @@
 from transport import Transport
-from constants import Beeps, Passengers, Weight, Carrying, UNKNOWN_TRANSPORT, FuelError
+from constants import Beeps, Weight, Carrying
 
 class Plane(Transport):
     type = 'Plane'

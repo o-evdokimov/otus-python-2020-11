@@ -1,8 +1,8 @@
 from pathlib import Path
 
 UNKNOWN_TRANSPORT = 'Unknown'
-InMove = 'In Move'
-Stopped = 'Stopped'
+INMOVE = 'In Move'
+STOPPED = 'Stopped'
 LIB_DIR = Path(__file__).resolve().parent.joinpath('audio')
 
 class FuelError(BaseException):

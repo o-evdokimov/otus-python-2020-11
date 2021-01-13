@@ -1,5 +1,5 @@
 from transport import Transport
-from constants import Beeps, InMove, Stopped, FuelError
+from constants import Beeps, INMOVE, STOPPED, FuelError
 from dataclasses import dataclass
 
 @dataclass
@@ -8,7 +8,7 @@ class Route:
     destination: str = None
 
 
-class Trucks(Transport):
+class Truck(Transport):
     type = 'Truck'
     beep = Beeps[type]
 
@@ -28,9 +28,9 @@ class Trucks(Transport):
             return True
         raise FuelError(f'{self.__class__} is not ready')
 
-class Truck(Trucks):
+class SmallTruck(Truck):
     type = 'Truck'
-    name = 'Truck'
+    name = 'SmallTruck'
     def __init__(self, number, passengers, route):
         print(f'### run {self.__class__} __init__')
         self.number = number
@@ -39,8 +39,8 @@ class Truck(Trucks):
         super().__init__(passengers)
 
     def check_status(self):
-        if self.check_gps(): self.status = InMove
-        else: self.status = Stopped
+        if self.check_gps(): self.status = INMOVE
+        else: self.status = STOPPED
 
     def check_gps(self):
         pass
