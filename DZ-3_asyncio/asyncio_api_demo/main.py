@@ -112,7 +112,11 @@ async def show_posts(key, value):
 
 
 async def run():
-    await Connect_DB()
+    try:
+        await Connect_DB()
+    except OSError as err:
+        print(f"Cannot connect to database:\n{err}")
+        exit(-1)
 
     answer=''
     menu_answer = 'up'
