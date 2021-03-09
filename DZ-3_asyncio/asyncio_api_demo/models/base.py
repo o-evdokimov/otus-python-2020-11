@@ -11,12 +11,14 @@ async def Connect_DB():
                         "port": "5432",
                         "user": "postgres",
                         "password": "qwerty",
-                        "database": "movies2",
+                        "database": "movies.postgres",
                     },
                 }
             },
             "apps": {"models": {"models": ["__main__"], "default_connection": "default"}},
         },
+        #_create_db=True,
         _create_db=False,
     )
     await Tortoise.generate_schemas()
+    #await Tortoise.close_connections()

@@ -2,7 +2,8 @@ from tortoise.models import Model
 from tortoise import fields
 
 class Movie(Model):
-    imdbID = fields.CharField(pk = True, max_length=255)
+    uuid = fields.UUIDField(pk=True)
+    imdbID = fields.CharField(max_length=255, unique=True)
     Title = fields.CharField(max_length=255)
     Year = fields.CharField(max_length=255)
     Type =  fields.CharField(max_length=255)

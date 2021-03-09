@@ -20,11 +20,9 @@ example_of_response = \
            "Poster":"https://m.media-amazon.com/images/M/MV5BMGU2NzRmZjUtOGUxYS00ZjdjLWEwZWItY2NlM2JhNjkxNTFmXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"},],
      "totalResults":"100","Response":"True"}
 
-import requests
 from datetime import datetime
 from tortoise import run_async
-from models.post import Post
-from models.movie import Movie
+from model_import import Movie, Post
 from requests.exceptions import ReadTimeout, ConnectTimeout, ConnectionError
 from models.base import Connect_DB
 import asyncio
@@ -63,7 +61,7 @@ async def fetch_movie_api(query):
             Poster = item.get('Poster')
             created_at = str(datetime.now())
             if not await Movie.exists(Title=Title, Type=Type):
-                movie = Movie(Title=Title, Year=Year, imdbID=imdbID, Type=Type, Poster=Poster, created_at=created_at)
+                movie = await Movie.create(Title=Title, Year=Year, imdbID=imdbID, Type=Type, Poster=Poster, created_at=created_at)
                 await movie.save()
                 movies_title.append(movie.Title)
                 count+=1
@@ -87,7 +85,7 @@ async def show_movies(movie_title):
 async def create_post(author, movie_id, title, text):
     created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     if not await Post.filter(title=title).exists() and await Movie.exists(imdbID=movie_id):
-            post = Post(author=author, movie_id=movie_id, title=title, text=text, created_at=created_at)
+            post = await Post.create(author=author, movie_id=movie_id, title=title, text=text, created_at=created_at)
             await post.save()
     else:
         print(f'\nNot found movie {movie_id} in local DB or post title {title!r} exist\n')
@@ -99,10 +97,10 @@ async def show_posts(key, value):
         posts = await Post.filter(author=value).all()
     elif key=='movie_id':
         movie = await Movie.filter(imdbID=value).first()
-        posts = await Post.filter(movie=movie).all()
+        posts = await movie.posts
     elif key=='title':
         movie = await Movie.filter(Title=value).first()
-        posts = await Post.filter(movie=movie).all()
+        posts = await movie.posts
     if posts:
         for post in posts:
             print(f'{(await posts[0].movie).Title!r} [ IMDB ID: {(await posts[0].movie).imdbID} ] \n{":" * 40}')
