@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    {% block title %}
+        {{ title }}
+    {% endblock %}
+    {{ super() }}
+{% endblock head %}
+
+{% block body %}
+    {{ super() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <form>
+                  <div class="form-group">
+                    <label for="FormTextAreaConfig">Config:</label>
+                    <textarea class="form-control" id="FormTextAreaConfig" rows="10" placeholder="configuration"></textarea>
+                  </div>
+                </form>
+                <form>
+                  <div class="form-group">
+                    <label for="FormTextAreaDevices">Devices:</label>
+                    <textarea class="form-control" id="FormTextAreaDevices" rows="10" placeholder="devices list"></textarea>
+                  </div>
+                </form>
+            </div>
+            <div class="col-4">
+                <div class="select-wrapper mt-5 pl-4">
+                        <label for="id_device_os">Device OS: </label>
+                        <select name="device_os" id="id_device_os" tabindex="-1">
+                            {% for os in network_os %}
+                                <option value={{ os }} selected="">{{ os }}</option>
+                            {% endfor %}
+                        </select>
+                </div>
+                <div class="form-check mt-5 pl-5">
+                  <input class="form-check-input" type="checkbox" value="ssh" id="o_ssh">
+                  <label class="form-check-label" for="o_ssh">
+                    Use ssh key
+                  </label>
+                </div>
+                <div class="form-check mt-3 pl-5">
+                  <input class="form-check-input" type="checkbox" value="block" id="o_block">
+                  <label class="form-check-label" for="o_block">
+                    Config by block
+                  </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            let use_ssh = localStorage.getItem('use_ssh');
+            let config_block = localStorage.getItem('config_block');
+            let device_os_val = localStorage.getItem('device_os_val');
+            document.getElementById('id_device_os').value = device_os_val
+            if (use_ssh === 'true') {
+                $('#o_ssh').prop('checked', true)
+            }
+            if (config_block === 'true') {
+                $('#o_block').prop('checked', true)
+            }
+             $("select[name='device_os']").value = device_os_val;
+        });
+
+        $("select[name='device_os']").change(function() {
+          localStorage.setItem('device_os_val', $(this).val());
+        });
+        $(document).on("change", ".form-check-input", function () {
+        if($('#o_ssh').is(':checked')){
+            localStorage.setItem('use_ssh', 'true');}
+            else {
+                localStorage.setItem('use_ssh', 'false');
+            }
+        if($('#o_block').is(':checked')){
+            localStorage.setItem('config_block', 'true');}
+            else {
+                localStorage.setItem('config_block', 'false');
+            }
+        });
+    </script>
+{% endblock %}
+</html>
