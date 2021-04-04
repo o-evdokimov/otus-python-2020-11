@@ -18,7 +18,9 @@
                         <label for="FormTextAreaConfig">Config:</label>
                         <textarea name="settings_config" class="form-control" id="FormTextAreaConfig" rows="10" placeholder="configuration"></textarea>
                         <div class="mt-5"></div>
-                        <label for="FormTextAreaDevices">Devices:</label>
+                        <label for="FormTextAreaDevices">
+                            <button class="btn btn-dark" id="get-devices" role="button" onclick="get_devices()">Fetch devices from DB</button>
+                        </label>
                         <textarea name="settings_devices" class="form-control" id="FormTextAreaDevices" rows="10" placeholder="devices list"></textarea>
                     </div>
                     <div class="col-4">
@@ -41,13 +43,17 @@
                     </div>
                 </div>
                 <div class="row mt-5 pl-3">
-                    <input id="submit-settings" type="submit" value="Submit">
+                    <input class="btn btn-primary" id="submit-settings" type="submit" value="Submit">
                 </div>
             </div>
         </form>
     </div>
 
     <script>
+        function get_devices() {
+              document.getElementById('FormTextAreaDevices').value=''
+              localStorage.setItem('devices_list', '{{ devices_list|join("\\n")}}');
+        }
         document.addEventListener("DOMContentLoaded", function(event) {
             let use_ssh = localStorage.getItem('use_ssh');
             let config_block = localStorage.getItem('config_block');
@@ -63,7 +69,6 @@
             if (config_block === 'true') {
                 $('#o_block').prop('checked', true)
             }
-             {#$("select[name='device_os']").value = device_os_val;#}
         });
 
         $("select[name='device_os']").change(function() {
@@ -85,10 +90,6 @@
         let textareaDevices = document.getElementById('FormTextAreaDevices');
         textareaDevices.addEventListener('input', function() {
             localStorage.setItem('devices_list', textareaDevices.value);
-
-            {#const fs = fs.require('fs');#}
-            {#let fileContent = textareaDevices.value;#}
-            {#fs.writeFileSync('devices1.txt', fileContent);#}
 
         });
         let textareaConfig = document.getElementById('FormTextAreaConfig');
