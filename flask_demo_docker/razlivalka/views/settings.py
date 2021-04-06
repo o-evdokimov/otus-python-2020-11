@@ -20,8 +20,9 @@ def settings():
         item : Device
         devices_hostnames.append(item.name)
 
-    context['devices_list'] = devices_hostnames
+    context['network_devices'] = devices_hostnames
     if request.method == 'POST':
+        devices_hostnames = []
         print('POST')
         form = request.form
         form_settings  = form.to_dict()
@@ -30,6 +31,8 @@ def settings():
         for item in devices:
             if not Device.query.filter_by(name=item).first():
                 db.session.add(Device(item))
+                devices_hostnames.append(item)
         db.session.commit()
+        context['network_devices'] = devices_hostnames
 
     return render_template('settings/index.html', title = 'Settings', **context)

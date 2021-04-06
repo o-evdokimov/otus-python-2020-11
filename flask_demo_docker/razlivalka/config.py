@@ -20,7 +20,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = SQLALCHEMY_TRACK_MODIFICATIONS
-    FLASK_APP = "app"
+    FLASK_APP = "main"
 
 
 class TestingConfig(Config):

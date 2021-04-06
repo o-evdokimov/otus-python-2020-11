@@ -13,6 +13,7 @@ app.config.from_object('config.DevelopmentConfig')
 db.init_app(app)
 mg = Migrate(app, db)
 
+
 @app.route('/')
 def index():
     return redirect(url_for('deploy_app.deploy', title='deploy'))

@@ -9,5 +9,17 @@ services:
     - 5000:5000
     env_file:
       - razlivalka/env_vars
+    #environment:
+      #SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://myuser:mypass@database:5432/devices.db
+    depends_on:
+      - database
+
+  database:
+    image: library/postgres:13.2
+    env_file:
+      - razlivalka/env_vars
+    ports:
+      - 5432:5432
+
 
 

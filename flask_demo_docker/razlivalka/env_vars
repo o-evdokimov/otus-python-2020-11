@@ -1,2 +1,9 @@
-SQLALCHEMY_DATABASE_URI = sqlite:///mydb
+#SQLALCHEMY_DATABASE_URI = sqlite:///mydb
+SQLALCHEMY_DATABASE_URI = postgresql+psycopg2://myuser:mypass@database:5432/devices.db
+POSTGRES_PASSWORD = mypass
+POSTGRES_USER = myuser
+POSTGRES_DB = devices.db
+
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+

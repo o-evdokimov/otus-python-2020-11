@@ -51,10 +51,12 @@
 
     <script>
         function get_devices() {
-              document.getElementById('FormTextAreaDevices').value=''
-              localStorage.setItem('devices_list', '{{ devices_list|join("\\n")}}');
+              document.getElementById('FormTextAreaDevices').value = '{{ network_devices|join("\\n")}}'
+              localStorage.setItem('devices_list', '{{ network_devices|join("\\n")}}');
+              {#init_settings()#}
         }
-        document.addEventListener("DOMContentLoaded", function(event) {
+        document.addEventListener("DOMContentLoaded", init_settings());
+        function init_settings() {
             let use_ssh = localStorage.getItem('use_ssh');
             let config_block = localStorage.getItem('config_block');
             let device_os_val = localStorage.getItem('device_os_val');
@@ -69,7 +71,7 @@
             if (config_block === 'true') {
                 $('#o_block').prop('checked', true)
             }
-        });
+        };
 
         $("select[name='device_os']").change(function() {
           localStorage.setItem('device_os_val', $(this).val());
