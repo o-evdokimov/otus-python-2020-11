@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="row mt-5 pl-3">
-                    <input class="btn btn-primary" id="submit-settings" type="submit" value="Submit">
+                    <input class="btn btn-primary" id="submit_settings" onclick="btn_submit()" type="submit" value="Submit">
                 </div>
             </div>
         </form>
@@ -53,10 +53,23 @@
         function get_devices() {
               document.getElementById('FormTextAreaDevices').value = '{{ network_devices|join("\\n")}}'
               localStorage.setItem('devices_list', '{{ network_devices|join("\\n")}}');
-              {#init_settings()#}
+        }
+        function btn_submit() {
+            $("#submit_settings").removeClass('btn-primary').addClass('btn-success');
+            localStorage.setItem('btn_submit', 1);
         }
         document.addEventListener("DOMContentLoaded", init_settings());
         function init_settings() {
+            $("#deploy-tab").removeClass('active');
+            $("#settings-tab").addClass('active');
+            let btn_submit_flag = localStorage.getItem('btn_submit');
+            if (btn_submit_flag === "1") {
+                $("#submit_settings").removeClass('btn-primary').addClass('btn-success');
+                localStorage.setItem('btn_submit', 0);
+            }
+            else {
+                $("#submit_settings").removeClass('btn-success').addClass('btn-primary');
+            }
             let use_ssh = localStorage.getItem('use_ssh');
             let config_block = localStorage.getItem('config_block');
             let device_os_val = localStorage.getItem('device_os_val');
