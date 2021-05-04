@@ -1,0 +1,5 @@
+# Project exclude paths
+/venv/
+/.idea/
+/myproject/db.sqlite3
+/myproject/razlivalka/pg-data/
