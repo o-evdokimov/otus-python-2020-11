@@ -1,0 +1,3 @@
+[submodule "more_django"]
+	path = more_django
+	url = ./
