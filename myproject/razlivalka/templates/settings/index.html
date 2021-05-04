@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    {% block title %}
+        {{ title }}
+    {% endblock %}
+    {{ block.super }}
+{% endblock head %}
+
+{% block body %}
+    {{ block.super }}
+    <div class="container">
+        <form method="POST" action={% url "settings" %}> {% csrf_token %}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-8">
+                        <label for="FormTextAreaConfig">Config:</label>
+                        <textarea name="settings_config" class="form-control" id="FormTextAreaConfig" rows="10" placeholder="configuration"></textarea>
+                        <div class="mt-5"></div>
+                        <label for="FormTextAreaDevices">
+                            <a class="btn btn-dark" id="get-devices" role="button" href="#" onclick="get_devices()">Fetch devices from DB</a>
+                        </label>
+                        <textarea name="settings_devices" class="form-control" id="FormTextAreaDevices" rows="10" placeholder="devices list"></textarea>
+                    </div>
+                    <div class="col-4">
+                        <div class="select-wrapper mt-5 pl-4">
+                            <label for="id_device_os">Device OS: </label>
+                            <select name="device_os" id="id_device_os" tabindex="-1">
+                                {% for os in network_os %}
+                                    <option value={{ os }} selected="">{{ os }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-check mt-5 pl-5">
+                          <input class="form-check-input" type="checkbox" value="true" id="o_ssh" name="box_ssh">
+                          <label class="form-check-label" for="o_ssh">Use ssh key</label>
+                        </div>
+                        <div class="form-check mt-3 pl-5">
+                          <input class="form-check-input" type="checkbox" value="true" id="o_block" name="box_block">
+                          <label class="form-check-label" for="o_block">Config by block</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5 pl-3">
+                    <input class="btn btn-primary" id="submit_settings" onclick="btn_submit()" type="submit" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", init_settings());
+        function init_settings() {
+            $("#settings-tab").addClass('active');
+
+            let btn_submit_flag = localStorage.getItem('btn_submit');
+            if (btn_submit_flag === "1") {
+                $("#submit_settings").removeClass('btn-primary').addClass('btn-success');
+            }
+            else {
+                $("#submit_settings").removeClass('btn-success').addClass('btn-primary');
+            }
+            let use_ssh = localStorage.getItem('use_ssh');
+            let config_block = localStorage.getItem('config_block');
+            let device_os_val = localStorage.getItem('device_os_val');
+            let devices_list = localStorage.getItem('devices_list');
+            let commands_list = localStorage.getItem('commands_list');
+            document.getElementById('id_device_os').value = device_os_val
+            document.getElementById('FormTextAreaDevices').value = devices_list
+            document.getElementById('FormTextAreaConfig').value = commands_list
+            if (use_ssh === 'true') {
+                $('#o_ssh').prop('checked', true)
+            }
+            if (config_block === 'true') {
+                $('#o_block').prop('checked', true)
+            }
+        }
+        function get_devices() {
+              document.getElementById('FormTextAreaDevices').value = '{{ network_devices}}'
+              localStorage.setItem('devices_list', '{{ network_devices}}');
+              localStorage.setItem('btn_submit', 0);
+              document.addEventListener("DOMContentLoaded", init_settings());
+        }
+        function btn_submit() {
+            $("#submit_settings").removeClass('btn-primary').addClass('btn-success');
+            localStorage.setItem('btn_submit', 1);
+        }
+
+        $("select[name='device_os']").change(function() {
+          localStorage.setItem('device_os_val', $(this).val());
+        });
+        $(document).on("change", ".form-check-input", function () {
+        if($('#o_ssh').is(':checked')){
+            localStorage.setItem('use_ssh', 'true');}
+            else {
+                localStorage.setItem('use_ssh', 'false');
+            }
+        if($('#o_block').is(':checked')){
+            localStorage.setItem('config_block', 'true');}
+            else {
+                localStorage.setItem('config_block', 'false');
+            }
+        });
+
+        let textareaDevices = document.getElementById('FormTextAreaDevices');
+        textareaDevices.addEventListener('input', function() {
+            localStorage.setItem('devices_list', textareaDevices.value);
+
+        });
+        let textareaConfig = document.getElementById('FormTextAreaConfig');
+        textareaConfig.addEventListener('input', function() {
+            localStorage.setItem('commands_list', textareaConfig.value);
+        });
+
+    </script>
+{% endblock %}
+</html>

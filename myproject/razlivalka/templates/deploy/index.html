@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    {% block title %}
+        {{ title }}
+    {% endblock %}
+    {{ block.super }}
+{% endblock head %}
+
+{% block body %}
+    {{ block.super }}
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12">
+                <label for="Command"><input class="form-control" id="Command" type="text" placeholder="Command" readonly></label>
+            </div>
+            <div class="col-12">
+                <label for="Options"><input class="form-control" id="Options" type="text" placeholder="Options" readonly></label>
+
+            </div>
+             <div class="col-12 mt-5">
+                 <a class="btn btn-primary" href = "#" aria-pressed="false">Run</a>
+             </div>
+
+            <div class="col-12 mt-5">
+                <label for="FormLogs">Logs:</label>
+                <textarea class="form-control" id="FormLogs" rows="20" placeholder="deploy logs"> {{ my_logs | escape }} </textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            $("#deploy-tab").addClass('active');
+            var ssh = localStorage.getItem("use_ssh");
+            var cfg_block = localStorage.getItem("config_block");
+            document.getElementById("Options").value = ssh + ':' + cfg_block;
+    });
+    </script>
+{% endblock %}
+</html>
