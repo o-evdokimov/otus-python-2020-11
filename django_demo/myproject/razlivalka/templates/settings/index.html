@@ -52,8 +52,8 @@
     <script>
         document.addEventListener("DOMContentLoaded", init_settings());
         function init_settings() {
-            $("#deploy-tab").removeClass('active');
             $("#settings-tab").addClass('active');
+
             let btn_submit_flag = localStorage.getItem('btn_submit');
             if (btn_submit_flag === "1") {
                 $("#submit_settings").removeClass('btn-primary').addClass('btn-success');

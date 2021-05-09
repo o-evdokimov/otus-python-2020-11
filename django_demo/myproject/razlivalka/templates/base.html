@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+{#        <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">#}
+        <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" media="screen">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
@@ -21,10 +23,13 @@
                         </div>
                         <ul class="nav nav-pills nav-justified" id="myTab" role="tablist">
                           <li class="nav-item">
-                            <a class="nav-link active" id="deploy-tab" href="{% url 'deploy' %}">Deploy</a>
+                            <a class="nav-link" id="deploy-tab" href="{% url 'deploy' %}">Deploy</a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" id="settings-tab" href="{% url 'settings' %}">Settings</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="devices-tab" href="{% url 'devices' %}">Devices</a>
                           </li>
                         </ul>
                         <div class="row example mb-4">
@@ -36,19 +41,7 @@
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="../static/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
-{#        <script src="/static/bootstrap/js/fs.js" crossorigin="anonymous"></script>#}
-        <script>
-          $('#myTab').click(function() {
-              if ($this.id === 'deploy-tab') {
-                  $('#deploy-tab').addClass('active');
-                  $('#settings-tab').removeClass('active');
-              } else {
-                  $('#deploy-tab').removeClass('active');
-                  $('#settings-tab').addClass('active');
-              }
-          })
-        </script>
+        <script src="{% static "bootstrap/js/bootstrap.min.js" %}" crossorigin="anonymous"></script>
     {% endblock %}
     </body>
 </html>

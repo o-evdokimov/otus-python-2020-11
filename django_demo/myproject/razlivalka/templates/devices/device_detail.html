@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+    {% block head %}
+        {% block title %}
+            {{ title }}
+        {% endblock %}
+        {{ block.super }}
+    {% endblock head %}
+
+{% block body %}
+    {{ block.super }}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <label for="DeviceDetailTextArea">Device details:</label>
+                <textarea name="settings_config" class="form-control" id="DeviceDetailTextArea" rows="10">
+Hostname: {{ object.hostname }}
+State: {{ object.state }}
+Hardware_model: {{ object.hardware_model }}
+                </textarea>
+            </div>
+        </div>
+
+        <div class="mt-5"></div>
+        <a class="btn btn-dark" href = {% url "devices" %}> Back </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            $("#devices-tab").addClass('active');
+    });
+    </script>
+{% endblock %}
+</html>

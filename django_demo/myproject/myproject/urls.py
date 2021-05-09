@@ -18,10 +18,13 @@ from django.urls import path
 
 from razlivalka.views.deploy import deploy
 from razlivalka.views.settings import settings
+from razlivalka.views.devices import DevicesListView, DeviceDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', deploy),
     path('deploy/', deploy, name='deploy'),
     path('settings/', settings, name='settings'),
+    path('devices/', DevicesListView.as_view(), name='devices'),
+    path('devices/<uuid:pk>/', DeviceDetailView.as_view(), name='device_detail'),
 ]
