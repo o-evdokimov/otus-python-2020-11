@@ -14,3 +14,21 @@ class Device(models.Model):
 
     def __str__(self):
         print(f'hostname: {self.hostname}')
+
+    def check_filters(self, filters):
+        if self.network_role == filters.get('network_role') and self.org_unit == filters.get('org_unit'):
+            return True
+        return False
+
+
+class Settings(models.Model):
+    name = models.CharField(max_length=40, null=False)
+    settings_config = models.TextField(null=False)
+    settings_devices  = models.TextField(null=False)
+    device_os = models.CharField(max_length=40, null=False)
+    box_ssh = models.BooleanField(null=False, blank=False)
+    box_block = models.BooleanField(null=False, blank=False)
+
+
+    def device_count_prod(self):
+        return len(str(self.settings_devices).split())

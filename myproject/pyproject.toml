@@ -13,6 +13,7 @@ pysnmp = "^4.4.12"
 beautifultable = "^1.0.1"
 requests = "^2.25.1"
 python-dotenv = "^0.17.0"
+pytest = "^6.2.4"
 
 [tool.poetry.dev-dependencies]
 

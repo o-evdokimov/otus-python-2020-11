@@ -2,7 +2,8 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
 from django import forms
 
-from ..models import Device
+from datetime import datetime
+from ..model import Device, Settings
 from ..forms import DeviceListForm
 
 import uuid
@@ -14,10 +15,27 @@ context['network_os'] = network_os
 
 def settings(request):
     global context
+    box_ssh = False
+    box_block = False
 
     if request.method == 'POST':
         form : forms.Form  = DeviceListForm(request.POST)
         form_settings  = form.data
+        print(form_settings)
+        settings_name = datetime.now().strftime('%H%M%S')
+        if form_settings.get('box_ssh') == 'true':
+            box_ssh = True
+        if form_settings.get('box_block') == 'true':
+            box_block = True
+        settings = Settings(name = settings_name,
+                            settings_config = form_settings.get('settings_config'),
+                            settings_devices = form_settings.get('settings_devices'),
+                            device_os = form_settings.get('device_os'),
+                            box_ssh = box_ssh,
+                            box_block = box_block)
+        print(f'!!! count = {settings.device_count_prod()}')
+        settings.save()
+        #
         devices_hostnames_list = form_settings.get('settings_devices').split()
         # save to db
         if form.is_valid():
