@@ -33,7 +33,6 @@ def settings(request):
                             device_os = form_settings.get('device_os'),
                             box_ssh = box_ssh,
                             box_block = box_block)
-        print(f'!!! count = {settings.device_count_prod()}')
         settings.save()
         #
         devices_hostnames_list = form_settings.get('settings_devices').split()
