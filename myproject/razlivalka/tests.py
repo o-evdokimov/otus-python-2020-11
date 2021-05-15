@@ -1,5 +1,6 @@
 from django.test import TestCase, client, Client
 from .model import Device, Settings
+from django.urls import reverse
 import uuid
 
 # Create your tests here.
@@ -19,7 +20,7 @@ class TestDevices(TestCase):
         self.assertEqual(count, 1)
 
     def test_context(self):
-        response = self.web_client.get('/')
+        response = self.web_client.get(reverse('deploy'))
         self.assertEqual(response.status_code, 200)
 
     def test_device_filters(self):
